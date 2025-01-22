@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h3>Register</h3>
+    <hr>
+    <form action="/register" method="post">
+        <div>
+            <label for="firstname">Firstname:</label><br>
+            <input type="text" autofocus autocomplete="off" name="firstname" placeholder="Firstname">
+        </div>
+        <div>
+            <label for="lastname">Lastname:</label><br>
+            <input type="text" autocomplete="off" name="lastname" placeholder="lastname">
+        </div>
+        <div>
+            <label for="gender">Gender:</label><br>
+            {% for g in gender %}
+                <input type="radio" name="gender" value="{{ g }}"> {{ g }}
+            {% endfor %}
+        </div>
+        <select name="sport" id="sport">
+            <option disabled selected value="">Select sport</option>
+            {% for sport in sports %}
+                <option value="{{ sport }}">{{ sport }}</option>
+            {% endfor %}
+        </select>
+        <div>
+            <label for="residence">Residence</label>
+            {% for resident in residence %}
+                <input type="radio" name="residence" value="{{ resident }}">{{ resident }}
+            {% endfor %}
+        </div>
+        <button type="submit">Register</button>
+    </form>
+{% endblock %}
