@@ -1,6 +1,10 @@
 from flask import Flask, request, render_template, redirect # type: ignore
+from cs50 import SQL
 
 app = Flask(__name__)
+
+# Connect to the database
+db = SQL("sqlite:///sports.db")
 
 # Declare the global variables to be rendered onto the index page
 SPORTS = ["Basketball", "Netball", "Football", "Other"]
@@ -30,8 +34,12 @@ def register():
         return render_template("error.html", message="Invalid sport!")
     return render_template("success.html", message="Registered successfull")
 
+# insert the data into the database
+    db.execute("INSERT INTO registrants(firstname, lastname, gender, sport, redidence) VALUES (?, ?, ?, ?, ?)", firstname, lastname, gender, sport, residence)
+
 @app.route("/registrants")
 def registrants():
-    return render_template("registrants.html")
+    registrants = db.execute("SELECT * FROM registrants ORDER BY firstname, lastname")
+    return render_template("registrants.html", registrants=registrants)
 
    
